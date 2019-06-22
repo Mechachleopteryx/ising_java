@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd `dirname $0`
+
+java -Xmx1g -cp ../target/classes/ com.matthagy.ising.Ising $*

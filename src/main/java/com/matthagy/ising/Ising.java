@@ -1,6 +1,7 @@
 package com.matthagy.ising;
 
 import java.util.Random;
+import java.util.StringJoiner;
 
 public class Ising {
 
@@ -57,6 +58,20 @@ public class Ising {
         }
     }
 
+    public String getState() {
+        StringBuilder stringBuilder = new StringBuilder();
+        boolean first = true;
+        for (short spin : spins) {
+            if (first) {
+                first = false;
+            } else {
+                stringBuilder.append(",");
+            }
+            stringBuilder.append(spin);
+        }
+        return stringBuilder.toString();
+    }
+
     public double netSpinRate() {
         int sum = 0;
         for (int i = 0; i < spins.length; i++) {
@@ -80,13 +95,13 @@ public class Ising {
                 Integer.parseInt(args[0]),
                 Double.parseDouble(args[1]),
                 Double.parseDouble(args[2]),
-                Integer.parseInt(args[3])
+                Long.parseLong(args[3])
         );
         final int analysisRate = Integer.parseInt(args[4]);
         final int cycles = Integer.parseInt(args[5]);
 
-        int steps = 0;
-        int accepts = 0;
+        long steps = 0;
+        long accepts = 0;
 
         for (int cycleIndex = 0; cycleIndex < cycles; cycleIndex++) {
             for (int stepIndex = 0; stepIndex < analysisRate; stepIndex++) {
@@ -94,6 +109,7 @@ public class Ising {
                     accepts++;
                 steps++;
             }
+            //System.out.println(ising.getState());
             System.err.printf("steps=%d acc rate=%.3f net spin=%.3f\n",
                     steps,
                     (double) accepts / (double) steps,
